@@ -47,6 +47,11 @@ public class SerieAController {
 
     @FXML
     void handleDomino(ActionEvent event) {
+    	Season s = boxSeason.getValue();
+	    model.creaGrafo(s);
+	    for(Team t : model.domino()){
+	    	txtResult.appendText(t+"\n");
+	    }
 
     }
 
