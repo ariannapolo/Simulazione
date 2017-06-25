@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -92,6 +95,7 @@ public class Model {
 	}
 	
 	public List<Team> domino(){
+		this.riduciGrafo(8);
 		
 		List<Team> domino = new ArrayList<Team>();
 		
@@ -126,13 +130,23 @@ public class Model {
 				archi.add(e);
 				recursive(parziale, best, archi, graph.getEdgeTarget(e));
 				//System.out.println(archi);		
-				//archi.remove(archi.size()-1);
+				archi.remove(archi.size()-1);
 				parziale.remove(parziale.size()-1);					
 			}
 		}
 	}
 
-
+	private void riduciGrafo(int dim) {
+		Set<Team> togliere = new HashSet<>() ;
+		
+		Iterator<Team> iter = graph.vertexSet().iterator() ;
+		for(int i=0; i<graph.vertexSet().size()-dim; i++) {
+			togliere.add(iter.next()) ;
+		}
+		graph.removeAllVertices(togliere) ;
+		System.err.println("Attenzione: cancello dei vertici dal grafo");
+		System.err.println("Vertici rimasti: "+graph.vertexSet().size()+"\n");
+	}
 
 	public static void main(String arg[]){
 		Model m = new Model();
